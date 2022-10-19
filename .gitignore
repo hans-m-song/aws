@@ -6,3 +6,10 @@ node_modules
 
 # cdk
 cdk.out*
+
+# secrets
+.gitsecret/keys/random_seed
+!*.secret
+eks-connector/eks-connector-clusterrole.yaml
+eks-connector/eks-connector-console-dashboard-full-access-group.yaml
+eks-connector/eks-connector.yaml

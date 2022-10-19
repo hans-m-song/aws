@@ -1,4 +1,4 @@
-import { Arn, aws_iam, Stack } from "aws-cdk-lib";
+import { Arn, aws_iam } from "aws-cdk-lib";
 import { Construct } from "constructs";
 
 export interface HostedZone {

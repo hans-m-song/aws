@@ -6,12 +6,12 @@ import { renderTable } from "@lib/core/table.js";
 import { Stack } from "@lib/aws/stack.js";
 
 const args = process.argv.slice(2);
-const debug =
-  process.env.DEBUG === "true"
-    ? (...args: any[]) => console.log("[DEBUG]", ...args)
-    : () => {};
+const debugEnabled = process.env.DEBUG === "true";
+const debug = debugEnabled
+  ? (...args: any[]) => console.log("[DEBUG]", ...args)
+  : () => {};
 debug("debug mode enabled");
-const [givenStackName, givenAction] = args;
+const [givenStackName, givenAction, ...restArgs] = args;
 
 console.log("Listing available stacks...");
 const stackdir = path.join(process.cwd(), "./stacks");
@@ -80,6 +80,9 @@ const actionIndex = givenAction
 const action = actions[actionIndex];
 debug({ actionIndex, action });
 
+const executionArgs = debugEnabled
+  ? [...restArgs, "--debug", "--verbose"]
+  : restArgs;
 switch (action) {
   // TODO via AWS SDK?
   // case "update":
@@ -99,22 +102,22 @@ switch (action) {
 
   case "synth": {
     console.log("Beginning synth...");
-    await stack.synth();
+    await stack.synth(executionArgs);
     break;
   }
 
   case "deploy": {
     console.log("Beginning synth...");
-    await stack.synth();
+    await stack.synth(executionArgs);
 
     console.log(`Beginning deploy...`);
-    await stack.deploy();
+    await stack.deploy(executionArgs);
     break;
   }
 
   case "destroy": {
     console.log("Beginning destroy...");
-    await stack.destroy();
+    await stack.destroy(executionArgs);
     break;
   }
 }

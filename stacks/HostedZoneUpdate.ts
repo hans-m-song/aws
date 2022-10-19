@@ -1,5 +1,5 @@
 import { App, Stack } from "aws-cdk-lib";
-import { HostedZoneUpdatePolicy } from "@lib/iam/Policy-Route53-HostedZoneUpdate.js";
+import { HostedZoneUpdatePolicy } from "@resources/iam/Policy-Route53-HostedZoneUpdate.js";
 
 const app = new App();
 const stack = new Stack(app, "HostedZoneUpdate");
